@@ -20,9 +20,7 @@ __pycache__
 
 s3o/
 .gradio/
-checkpoints/
 doc/
 gradio_outputs/
-sam3d_objects/
 pytorch3d/
 .ipynb_checkpoints/
