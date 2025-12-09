@@ -2,6 +2,8 @@
 from collections import namedtuple
 import random
 from typing import Optional, Dict
+from typing import Union
+
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -198,7 +200,8 @@ def rembg(image, mask, pointmap=None):
 
 def resize_and_make_square(
     img_size: int,
-    make_square: bool | str = False,
+    # make_square: bool | str = False,
+    make_square: Union[bool, str] = False,
 ):
     """
     Create image and mask transforms based on configuration.

@@ -1,8 +1,25 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
 import os
 
+
 # not ideal to put that here
-os.environ["CUDA_HOME"] = os.environ["CONDA_PREFIX"]
+# os.environ["CUDA_HOME"] = os.environ["CONDA_PREFIX"]
+
+
+# Try to set CUDA_HOME, fallback to common paths
+if "CONDA_PREFIX" in os.environ:
+    os.environ["CUDA_HOME"] = os.environ["CONDA_PREFIX"]
+elif "CUDA_HOME" not in os.environ:
+    # Try common CUDA paths
+    import subprocess
+    try:
+        cuda_path = subprocess.check_output(['which', 'nvcc']).decode().strip()
+        os.environ["CUDA_HOME"] = os.path.dirname(os.path.dirname(cuda_path))
+    except:
+        # Fallback to common location
+        if os.path.exists('/usr/local/cuda'):
+            os.environ["CUDA_HOME"] = '/usr/local/cuda'
+
 os.environ["LIDRA_SKIP_INIT"] = "true"
 
 import sys
@@ -13,7 +30,7 @@ from omegaconf import OmegaConf, DictConfig, ListConfig
 from hydra.utils import instantiate, get_method
 import torch
 import math
-import utils3d
+# import utils3d
 import shutil
 import subprocess
 import seaborn as sns
@@ -25,7 +42,7 @@ from copy import deepcopy
 from kaolin.visualize import IpyTurntableVisualizer
 from kaolin.render.camera import Camera, CameraExtrinsics, PinholeIntrinsics
 import builtins
-from pytorch3d.transforms import quaternion_multiply, quaternion_invert
+#from pytorch3d.transforms import quaternion_multiply, quaternion_invert
 
 import sam3d_objects  # REMARK(Pierre) : do not remove this import
 from sam3d_objects.pipeline.inference_pipeline_pointmap import InferencePipelinePointMap
